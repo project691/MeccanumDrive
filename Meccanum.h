@@ -10,21 +10,21 @@
 //Declaration
 class Meccanum {
 public:
-    //Constructor
-    Meccanum(PIDVelocityMotor &_fr, PIDVelocityMotor &_fl, PIDVelocityMotor &_br, PIDVelocityMotor &_bl);
-          
-    //Destructor
-    ~Meccanum();
-    
-    //Functions
-    void moveDual(Joystick rjoy, Joystick ljoy);
-    void move(Joystick joy);
-    void update(double forward, double right, double clockwise);
-    //void tank(double right, double left);
-    void stop();
-    
+	//Constructor
+	Meccanum(PIDVelocityMotor &_fr, PIDVelocityMotor &_fl, PIDVelocityMotor &_br, PIDVelocityMotor &_bl);
+
+	//Destructor
+	~Meccanum();
+
+	//Functions
+	void moveDual(Joystick rjoy, Joystick ljoy);
+	void move(Joystick joy);
+	void update(double forward, double right, double clockwise);
+	//void tank(double right, double left);
+	void stop();
+
 private:
-    //Init Data
+	//Init Data
 	//PIDMotors
 	PIDVelocityMotor &fr;
 	PIDVelocityMotor &fl;

@@ -12,7 +12,7 @@ class Robot : public SimpleRobot
 private:
 	Joystick driveJoy;
 	Joystick shooterJoy;
-	
+
 	Victor frMotor;
 	Victor flMotor;
 	Victor brMotor;
@@ -25,7 +25,7 @@ private:
 	PIDVelocityMotor fl;
 	PIDVelocityMotor br;
 	PIDVelocityMotor bl;
-	
+
 	Meccanum drive;
 	double forward;
 	double right;
@@ -67,14 +67,14 @@ public:
 		brEnc.Start();
 		blEnc.Start();
 	}
-	
+
 	/**
 	 * Kill the watchdog so it doesn't interfere with the program.
 	 */
 	void RobotInit(void) {
 		Watchdog().SetEnabled(false);
 	}
-	
+
 	/**
 	 * Print a message stating that the robot is disabled.
 	 */
@@ -115,7 +115,7 @@ public:
 				clockwise = 0.0;
 			} else {
 				clockwise = driveJoy.GetRawAxis(3);
-				if(clockwise <= 0.5) {
+				if(clockwise <= fabs(0.5)) {
 					clockwise *= 0.5;
 				} else {
 					clockwise *= fabs(clockwise);
@@ -147,7 +147,7 @@ public:
 			Wait(0.005);
 		}
 	}
-	
+
 	/**
 	 * Runs during test mode
 	 */

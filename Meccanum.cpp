@@ -7,17 +7,17 @@
 
 //Constructor
 Meccanum::Meccanum(PIDVelocityMotor &_fr,
-					PIDVelocityMotor &_fl,
-					PIDVelocityMotor &_br,
-					PIDVelocityMotor &_bl) : fr(_fr),
-												fl(_fl),
-												br(_br),
-												bl(_bl),
-												frVel(0.0),
-												flVel(0.0),
-												brVel(0.0),
-												blVel(0.0),
-												topVel(0.0)
+				   PIDVelocityMotor &_fl,
+				   PIDVelocityMotor &_br,
+				   PIDVelocityMotor &_bl) : fr(_fr),
+											fl(_fl),
+											br(_br),
+											bl(_bl),
+											frVel(0.0),
+											flVel(0.0),
+											brVel(0.0),
+											blVel(0.0),
+											topVel(0.0)
 {
 	printf("Meccanum drive object created!\n");
 }
