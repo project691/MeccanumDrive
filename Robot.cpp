@@ -7,11 +7,9 @@
 #include "Meccanum.h"
 
 //Main Class
-class Robot : public SimpleRobot
-{
+class Robot : public SimpleRobot {
 private:
 	Joystick driveJoy;
-	Joystick shooterJoy;
 
 	Victor frMotor;
 	Victor flMotor;
@@ -33,26 +31,24 @@ private:
 	double scalar;
 
 public:
-	Robot(void):
-		driveJoy(DRIVE_JOYSTICK),
-		shooterJoy(SHOOTER_JOYSTICK),
-		frMotor(DRIVE_VICTOR_SIDECARS[0], FR_DRIVE_VICTOR),
-		flMotor(DRIVE_VICTOR_SIDECARS[1], FL_DRIVE_VICTOR),
-		brMotor(DRIVE_VICTOR_SIDECARS[2], BR_DRIVE_VICTOR),
-		blMotor(DRIVE_VICTOR_SIDECARS[3], BL_DRIVE_VICTOR),
-		frEnc(FR_DRIVE_ENCODER_SIDECAR, FR_DRIVE_ENCODER_A, FR_DRIVE_ENCODER_SIDECAR, FR_DRIVE_ENCODER_B, FR_DRIVE_ENCODER_B),
-		flEnc(FL_DRIVE_ENCODER_SIDECAR, FL_DRIVE_ENCODER_A, FL_DRIVE_ENCODER_SIDECAR, FL_DRIVE_ENCODER_B, FL_DRIVE_ENCODER_B),
-		brEnc(BR_DRIVE_ENCODER_SIDECAR, BR_DRIVE_ENCODER_A, BR_DRIVE_ENCODER_SIDECAR, BR_DRIVE_ENCODER_B, BR_DRIVE_ENCODER_B),
-		blEnc(BL_DRIVE_ENCODER_SIDECAR, BL_DRIVE_ENCODER_A, BL_DRIVE_ENCODER_SIDECAR, BL_DRIVE_ENCODER_B, BL_DRIVE_ENCODER_B),
-		fr("FR", frMotor, frEnc, FR_DRIVE_PID),
-		fl("FL", flMotor, flEnc, FL_DRIVE_PID),
-		br("BR", brMotor, brEnc, BR_DRIVE_PID),
-		bl("BL", blMotor, blEnc, BL_DRIVE_PID),
-		drive(fr, fl, br, bl),
-		forward(0.0),
-		right(0.0),
-		clockwise(0.0),
-		scalar(1.0)
+	Robot(void): driveJoy(DRIVE_JOYSTICK),
+				 frMotor(DRIVE_VICTOR_SIDECARS[0], FR_DRIVE_VICTOR),
+				 flMotor(DRIVE_VICTOR_SIDECARS[1], FL_DRIVE_VICTOR),
+				 brMotor(DRIVE_VICTOR_SIDECARS[2], BR_DRIVE_VICTOR),
+				 blMotor(DRIVE_VICTOR_SIDECARS[3], BL_DRIVE_VICTOR),
+				 frEnc(FR_DRIVE_ENCODER_SIDECAR, FR_DRIVE_ENCODER_A, FR_DRIVE_ENCODER_SIDECAR, FR_DRIVE_ENCODER_B, FR_DRIVE_ENCODER_B),
+				 flEnc(FL_DRIVE_ENCODER_SIDECAR, FL_DRIVE_ENCODER_A, FL_DRIVE_ENCODER_SIDECAR, FL_DRIVE_ENCODER_B, FL_DRIVE_ENCODER_B),
+				 brEnc(BR_DRIVE_ENCODER_SIDECAR, BR_DRIVE_ENCODER_A, BR_DRIVE_ENCODER_SIDECAR, BR_DRIVE_ENCODER_B, BR_DRIVE_ENCODER_B),
+				 blEnc(BL_DRIVE_ENCODER_SIDECAR, BL_DRIVE_ENCODER_A, BL_DRIVE_ENCODER_SIDECAR, BL_DRIVE_ENCODER_B, BL_DRIVE_ENCODER_B),
+				 fr("FR", frMotor, frEnc, FR_DRIVE_PID),
+				 fl("FL", flMotor, flEnc, FL_DRIVE_PID),
+				 br("BR", brMotor, brEnc, BR_DRIVE_PID),
+				 bl("BL", blMotor, blEnc, BL_DRIVE_PID),
+				 drive(fr, fl, br, bl),
+				 forward(0.0),
+				 right(0.0),
+				 clockwise(0.0),
+				 scalar(1.0)
 	{
 		frEnc.SetDistancePerPulse(FR_DRIVE_ENCODER_DISTANCE_PER_PULSE);
 		flEnc.SetDistancePerPulse(FL_DRIVE_ENCODER_DISTANCE_PER_PULSE);
@@ -69,7 +65,7 @@ public:
 	}
 
 	/**
-	 * Kill the watchdog so it doesn't interfere with the program.
+	 * Kill the watchdog so it doesn't interfere with the rest of the program.
 	 */
 	void RobotInit(void) {
 		Watchdog().SetEnabled(false);
@@ -83,12 +79,12 @@ public:
 	}
 
 	/**
-	 * Drive left & right motors for 2 seconds then stop.
+	 * Print a message stating that the robot has entered autonomous mode.
 	 */
 	void Autonomous(void)
 	{
 		while(IsEnabled() && IsAutonomous()) {
-			
+			printf("Autonomous mode enabled!\n");
 		}
 	}
 
@@ -122,6 +118,11 @@ public:
 				}
 				clockwise *= scalar;
 			}
+			if(driveJoy.GetRawButton(2)) {
+				forward = 0.0;
+				right = 0.0;
+				clockwise = 0.0;
+			}
 			drive.update(forward, right, clockwise);
 						//Forward  Right  Clockwise
 			//printf("Forward: %f,\tRight: %f,\tClockwise: %f\n", forward, right, clockwise);
@@ -133,7 +134,7 @@ public:
 			dslcd->PrintfLine(DriverStationLCD::kUser_Line5, "DriveJoy: X=%f, Y=%f, Z=%f", driveJoy.GetRawAxis(1));
 			dslcd->PrintfLine(DriverStationLCD::kUser_Line6, "Y=%f, Z=%f", driveJoy.GetRawAxis(2), driveJoy.GetRawAxis(3));
 			dslcd->UpdateLCD();
-			
+
 			/*if(driveJoy.getRawButton(1)) {
 				drive.update(1.0, 0.0, 0.0);
 			} else if(driveJoy.getRawButton(3)) {
@@ -143,13 +144,13 @@ public:
 			} else {
 				drive.update(0.0, 0.0, 0.0);
 			}*/
-			
+
 			Wait(0.005);
 		}
 	}
 
 	/**
-	 * Runs during test mode
+	 * Update SmartDashboardwhile in test mode.
 	 */
 	void Test() {
 		while(IsTest()) {
