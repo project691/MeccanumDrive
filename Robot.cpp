@@ -111,7 +111,7 @@ public:
 				clockwise = 0.0;
 			} else {
 				clockwise = driveJoy.GetRawAxis(3);
-				if(clockwise <= fabs(0.5)) {
+				if(fabs(clockwise) <= 0.5) {
 					clockwise *= 0.5;
 				} else {
 					clockwise *= fabs(clockwise);
