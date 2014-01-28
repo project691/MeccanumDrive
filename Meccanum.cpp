@@ -44,6 +44,7 @@ void Meccanum::update(double forward, double right, double clockwise) {
 
 	//Set the motor objects to the output value for motor control and additional scaling
 	//Find the maximum speed
+	topVel = 0.0;
 	if(topVel < fabs(frVel)) {topVel = frVel;}
 	else if(topVel < fabs(flVel)) {topVel = flVel;}
 	else if(topVel < fabs(brVel)) {topVel = brVel;}
