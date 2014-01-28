@@ -10,6 +10,7 @@
 class Robot : public SimpleRobot {
 private:
 	Joystick driveJoy;
+	bool reset;
 
 	Victor frMotor;
 	Victor flMotor;
@@ -32,6 +33,7 @@ private:
 
 public:
 	Robot(void): driveJoy(DRIVE_JOYSTICK),
+				 reset(false),
 				 frMotor(DRIVE_VICTOR_SIDECARS[0], FR_DRIVE_VICTOR),
 				 flMotor(DRIVE_VICTOR_SIDECARS[1], FL_DRIVE_VICTOR),
 				 brMotor(DRIVE_VICTOR_SIDECARS[2], BR_DRIVE_VICTOR),
@@ -118,10 +120,18 @@ public:
 				}
 				clockwise *= scalar;
 			}
-			if(driveJoy.GetRawButton(2)) {
+			if(driveJoy.GetRawButton(1)) {
 				forward = 0.0;
 				right = 0.0;
 				clockwise = 0.0;
+			}
+			if(driveJoy.GetRawButton(2) && !reset) {
+				forward = 0.0;
+				right = 0.0;
+				clockwise = 0.0;
+				reset = true;
+			} else if(!driveJoy.GetRawButton(2)) {
+				reset = false;
 			}
 			drive.update(forward, right, clockwise);
 						//Forward  Right  Clockwise
