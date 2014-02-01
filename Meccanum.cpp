@@ -45,13 +45,13 @@ void Meccanum::update(double forward, double right, double clockwise) {
 	//Set the motor objects to the output value for motor control and additional scaling
 	//Find the maximum speed
 	topVel = 0.0;
-	if(topVel < fabs(frVel)) {topVel = frVel;}
-	else if(topVel < fabs(flVel)) {topVel = flVel;}
-	else if(topVel < fabs(brVel)) {topVel = brVel;}
-	else if(topVel < fabs(blVel)) {topVel = blVel;}
+	if(topVel < fabs(frVel)) {topVel = fabs(frVel);}
+	if(topVel < fabs(flVel)) {topVel = fabs(flVel);}
+	if(topVel < fabs(brVel)) {topVel = fabs(brVel);}
+	if(topVel < fabs(blVel)) {topVel = fabs(blVel);}
 	
 	//Scale motor power if it is above 100%
-	if(fabs(topVel) > 1.0) {
+	if(topVel > 1.0) {
 		frVel /= topVel;
 		flVel /= topVel;
 		brVel /= topVel;
@@ -64,15 +64,6 @@ void Meccanum::update(double forward, double right, double clockwise) {
 	br.run(brVel);
 	bl.run(blVel);
 }
-
-/*
-void Meccanum::tank(double right, double left) {
-	fr.run(right);
-	fl.run(left);
-	br.run(right);
-	bl.run(left);
-}
-*/
 
 void Meccanum::stop() {
 		fr.run(0.0);

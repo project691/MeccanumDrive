@@ -10,7 +10,6 @@
 class Robot : public SimpleRobot {
 private:
 	Joystick driveJoy;
-	bool reset;
 
 	Victor frMotor;
 	Victor flMotor;
@@ -33,7 +32,6 @@ private:
 
 public:
 	Robot(void): driveJoy(DRIVE_JOYSTICK),
-				 reset(false),
 				 frMotor(DRIVE_VICTOR_SIDECARS[0], FR_DRIVE_VICTOR),
 				 flMotor(DRIVE_VICTOR_SIDECARS[1], FL_DRIVE_VICTOR),
 				 brMotor(DRIVE_VICTOR_SIDECARS[2], BR_DRIVE_VICTOR),
@@ -125,14 +123,6 @@ public:
 				right = 0.0;
 				clockwise = 0.0;
 			}
-			if(driveJoy.GetRawButton(2) && !reset) {
-				forward = 0.0;
-				right = 0.0;
-				clockwise = 0.0;
-				reset = true;
-			} else if(!driveJoy.GetRawButton(2)) {
-				reset = false;
-			}
 			drive.update(forward, right, clockwise);
 						//Forward  Right  Clockwise
 			//printf("Forward: %f,\tRight: %f,\tClockwise: %f\n", forward, right, clockwise);
@@ -141,8 +131,6 @@ public:
 			dslcd->PrintfLine(DriverStationLCD::kUser_Line2, "Right: %f", right);
 			dslcd->PrintfLine(DriverStationLCD::kUser_Line3, "Clockwise: %f", clockwise);
 			dslcd->PrintfLine(DriverStationLCD::kUser_Line4, "Time: %f", GetTime());
-			dslcd->PrintfLine(DriverStationLCD::kUser_Line5, "DriveJoy: X=%f, Y=%f, Z=%f", driveJoy.GetRawAxis(1));
-			dslcd->PrintfLine(DriverStationLCD::kUser_Line6, "Y=%f, Z=%f", driveJoy.GetRawAxis(2), driveJoy.GetRawAxis(3));
 			dslcd->UpdateLCD();
 
 			/*if(driveJoy.getRawButton(1)) {

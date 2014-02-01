@@ -20,7 +20,6 @@ public:
 	void moveDual(Joystick rjoy, Joystick ljoy);
 	void move(Joystick joy);
 	void update(double forward, double right, double clockwise);
-	//void tank(double right, double left);
 	void stop();
 
 private:

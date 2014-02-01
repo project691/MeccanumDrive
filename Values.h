@@ -6,7 +6,7 @@
 	const int SIDECAR_R = 1;
 	const int SIDECAR_L = 2;
 
-	const int DRIVE_JOYSTICK	= 1;
+	const int DRIVE_JOYSTICK = 1;
 
 	const int FR_DRIVE_VICTOR		= 9;
 	const int FL_DRIVE_VICTOR		= 9;
